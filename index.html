@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>BellAir Broker Pro</title>
+  <meta name="theme-color" content="#0E2430">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BellAir">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-mark">BA</div>
+    <div>
+      <div class="eyebrow">Aviation Brokerage</div>
+      <h1>BellAir Broker Pro</h1>
+    </div>
+  </header>
+
+  <main>
+    <section id="tab-quote" class="tab active">
+      <section class="card hero-card">
+        <div class="section-title">New charter quote</div>
+        <div class="grid two">
+          <label>Aircraft
+            <select id="aircraftSelect"></select>
+          </label>
+          <label>Passengers
+            <input id="paxInput" type="number" min="1" value="2">
+          </label>
+        </div>
+        <div class="grid two">
+          <label>Departure
+            <input id="depSearch" list="airportList" placeholder="Search airport or strip">
+          </label>
+          <label>Destination
+            <input id="dstSearch" list="airportList" placeholder="Search airport or strip">
+          </label>
+        </div>
+        <datalist id="airportList"></datalist>
+        <div id="stops"></div>
+        <button id="addStopBtn" class="secondary">+ Add stop</button>
+        <div class="grid three">
+          <label>Flat landing fee
+            <input id="landingFee" type="number" value="200">
+          </label>
+          <label>Per pax fee
+            <input id="perPaxFee" type="number" value="0">
+          </label>
+          <label>Margin %
+            <input id="margin" type="number" value="15">
+          </label>
+        </div>
+        <label class="check"><input id="returnFlight" type="checkbox"> Return flight</label>
+        <button id="calcBtn" class="primary">Calculate Quote</button>
+      </section>
+
+      <section class="card map-card">
+        <div class="section-title">Route map</div>
+        <svg id="routeMap" viewBox="0 0 900 650" role="img" aria-label="Route map"></svg>
+        <div id="routeSummary" class="summary-line">Select departure and destination.</div>
+      </section>
+
+      <section id="quoteResult" class="card quote-card hidden">
+        <div class="quote-head">
+          <div><div class="quote-logo">BellAir</div><div class="muted">Aviation Brokerage</div></div>
+          <div class="quote-ref" id="quoteRef"></div>
+        </div>
+        <div class="quote-total" id="quoteTotal"></div>
+        <div class="quote-grid">
+          <div><span>Route</span><strong id="qRoute"></strong></div>
+          <div><span>Aircraft</span><strong id="qAircraft"></strong></div>
+          <div><span>Passengers</span><strong id="qPax"></strong></div>
+          <div><span>Distance</span><strong id="qDistance"></strong></div>
+          <div><span>Flight time</span><strong id="qTime"></strong></div>
+          <div><span>GST</span><strong id="qGst"></strong></div>
+        </div>
+        <div id="fuelWarnings"></div>
+        <div class="actions"><button id="saveQuoteBtn" class="secondary">Save Quote</button><button onclick="window.print()" class="secondary">Print / PDF</button></div>
+      </section>
+    </section>
+
+    <section id="tab-airports" class="tab">
+      <section class="card">
+        <div class="section-title">Airports and strips</div>
+        <input id="airportFilter" placeholder="Search database">
+        <div id="airportRows" class="rows"></div>
+      </section>
+      <section class="card">
+        <div class="section-title">Add / edit airport</div>
+        <div class="grid two">
+          <input id="apCode" placeholder="Code e.g. YPJT">
+          <input id="apName" placeholder="Name">
+          <input id="apLat" type="number" step="0.0001" placeholder="Latitude">
+          <input id="apLon" type="number" step="0.0001" placeholder="Longitude">
+          <input id="apRunway" type="number" placeholder="Runway metres">
+          <input id="apSurface" placeholder="Surface">
+        </div>
+        <input id="apNotes" placeholder="Notes / fuel / PPR">
+        <button id="saveAirportBtn" class="primary">Save airport</button>
+      </section>
+    </section>
+
+    <section id="tab-quotes" class="tab">
+      <section class="card">
+        <div class="section-title">Saved quotes</div>
+        <div id="savedQuotes" class="rows"></div>
+      </section>
+    </section>
+
+    <section id="tab-settings" class="tab">
+      <section class="card">
+        <div class="section-title">Aircraft manager</div>
+        <div id="aircraftEditor" class="rows"></div>
+        <button id="resetAircraftBtn" class="secondary">Reset aircraft defaults</button>
+      </section>
+      <section class="card">
+        <div class="section-title">About Stage 1</div>
+        <p class="muted">Stage 1 is the clean project foundation. Stage 2 will add full public AU airport import. Stage 3 will improve fuel-stop suggestions and PDF polish.</p>
+      </section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-tab="quote" class="active">Quote</button>
+    <button data-tab="airports">Airports</button>
+    <button data-tab="quotes">Quotes</button>
+    <button data-tab="settings">Settings</button>
+  </nav>
+
+  <script src="data/aircraft.js"></script>
+  <script src="data/airports.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
